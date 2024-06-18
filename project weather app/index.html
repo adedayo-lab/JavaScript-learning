@@ -67,14 +67,13 @@
                 document.querySelector(".weather").style.display = "none";
             }
             else{
-                
+
                 var data = await response.json();
 
-            // Now we display on console to check for Api outputs and errors
+            // Now we display on console to check for Api outputs and errors details with the below code
             console.log(data);
 
-
-            // now we add appropraite data from d .Json file detail on Api out
+            // now we add appropraite data from the .Json file detail on Api out
             document.querySelector(".city").innerHTML = data.name;
             document.querySelector(".temp").innerHTML =  Math.round(data.main.temp) + "°C";
             document.querySelector(".humidity").innerHTML = data.main.humidity + "%";

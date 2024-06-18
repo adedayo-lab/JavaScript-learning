@@ -4,9 +4,13 @@
     font-family: 'poppis', sans-serif;
     box-sizing: border-box;
 }
+
+
 body{
     background: #222;
 }
+
+
 .card{
     width: 90%;
     max-width: 470px;
@@ -17,6 +21,8 @@ body{
     padding: 40px 35px;
     text-align: center;
 }
+
+
 .search{
     width: 100%;
     display: flex;
@@ -44,6 +50,18 @@ body{
     height: 60px;
     cursor: pointer;
 }
+/* Added an external code for Css behaviour improvement */
+.search button:hover {
+  background-color: #b2d4c69c; /* Lighter shade on hover */
+}
+.search button:active {
+  transform: scale(0.98); /* Scales down more on click */
+  background-color: #ebfffc; /* Different color on click */
+}
+
+
+
+/*  */
 .search button img{
     width: 16px;
 }
@@ -93,11 +111,12 @@ body{
 .weather{
     display: none;
 }
+
 /* code css to handle error when user enters wrong city  name */
 .error{
-    text-align: left;
-    margin-left: 10px;
-    font-size: 14px;
+    text-align: center;
+    /* margin-left: 10px; */
+    font-size: 24px;
     margin-top: 10px;
     display: none;
 }
