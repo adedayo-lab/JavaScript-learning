@@ -1,22 +1,30 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta name "viewpoint" content="width=device-width, initial-scale=1.0">
+        <meta name "viewport" content="width=device-width, initial-scale=1.0">
         <title>Weather App Project</title>
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
+
         <!-- This class Card serves as a container -->
         <div class="card">
             <div class="search">
-                <input type="text" placeholder=" enter city name" spellcheck="false">
-                <button><img src="images/search.png" alt=""></button>
+                <input type="text" placeholder="enter city name" spellcheck="false">
+                <button><img src="images/search.png"></button>
             </div>
+
+            <!-- adding a class to handle if wrong city name is enterred -->
+            <div class="error">
+                <p>Invalid city name</p>
+            </div>
+
             <!-- Adding another Class Weather to display weather img -->
+             <!-- might add another weather-background to depict current weather time like Night time or day time  -->
             <div class="weather">
                 <img src="images/rain.png" class="weather-icon">
-                <h1 class="temp">22°C</h1>
-                <h2 class="city"> Lagos</h2>
+                <h1 class="temp">-0°C</h1>
+                <h2 class="city">Lagos</h2>
                 <!-- Adding the details of the weather & related img file  -->
                 <div class="details">
                     <div class="col">
@@ -36,5 +44,74 @@
                 </div>
             </div>
         </div>
+
+<!-- JavaScript Code below -->
+    <script>
+        const apiKey = "9b65eecd0ac5983992fe43a7323492e5";
+        const apiUrl = "https://api.openweathermap.org/data/2.5/weather?&units=metric&q=";
+
+        // below for var to add input for city with search feild and button
+        const searchBox = document.querySelector(".search input");
+        const searchBtn = document.querySelector(".search button");
+        // updating pic per weather condition
+        const weatherIcon = document.querySelector(".weather-icon");
+        // should probaly look into creating a weather background to depict current weather time look for future upgrade of project
+
+// creating JS Function for weather checking
+        async function checkWeather(city){
+            const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
+
+            // adding if statement to check for error in city name as with display none; in css file
+            if(response.status == 404){
+                document.querySelector(".error").style.display = "block";
+                document.querySelector(".weather").style.display = "none";
+            }
+            else{
+                
+                var data = await response.json();
+
+            // Now we display on console to check for Api outputs and errors
+            console.log(data);
+
+
+            // now we add appropraite data from d .Json file detail on Api out
+            document.querySelector(".city").innerHTML = data.name;
+            document.querySelector(".temp").innerHTML =  Math.round(data.main.temp) + "°C";
+            document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
+            document.querySelector(".wind").innerHTML = data.wind.speed + "km/h";
+
+            // adding if statement for weather conditions and display per Api outputs
+
+            if(data.weather[0].main == "Clouds"){
+                weatherIcon.src = "Images/clouds.png";
+            }
+            else if(data.weather[0].main == "Clear"){
+                weatherIcon.src = "Images/clear.png";
+            }
+            else if(data.weather[0].main == "Rain"){
+                weatherIcon.src = "Images/rain.png";
+            }
+            else if(data.weather[0].main == "Drizzle"){
+                weatherIcon.src = "Images/drizzle.png";
+            }
+            else if(data.weather[0].main == "Mist"){
+                weatherIcon.src = "Images/mist.png";
+            }
+            // to display after .weather css = none as been activated in CSS
+            document.querySelector(".weather").style.display = "block";
+            document.querySelector(".error").style.display = "none";
+
+            // putting into consideration that to add more detailed output from Api main html and css should be updated
+            // there after calling its function output here for easier work flow.
+            }
+
+            
+        }
+        // adding city with user input
+        searchBtn.addEventListener("click", ()=>{
+            checkWeather(searchBox.value);
+        })
+  
+    </script>
     </body>
-</html>
+</html> 
